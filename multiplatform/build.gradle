@@ -9,8 +9,14 @@ version '0.0.1'
 
 apply plugin: 'maven-publish'
 
-def iosTarget(Closure closure) {
+def iosTargetConfiguration = {
+    binaries {
+        framework()
+    }
 
+    compilations.main {
+        extraOpts "-Xobjc-generics"
+    }
 }
 
 kotlin {
@@ -18,22 +24,9 @@ kotlin {
     // This is for iPhone emulator
     // Switch here to iosArm64 (or iosArm32) to build library for iPhone device
     if (project.ios_device_target == 'emulator') {
-        iosX64("ios") {
-            binaries {
-                framework()
-            }
-
-            compilations.main {
-                extraOpts "-Xobjc-generics"
-            }
-
-        }
+        iosX64("ios", iosTargetConfiguration)
     } else {
-        iosArm64("ios") {
-            binaries {
-                framework()
-            }
-        }
+        iosArm64("ios", iosTargetConfiguration)
     }
 
     sourceSets {
