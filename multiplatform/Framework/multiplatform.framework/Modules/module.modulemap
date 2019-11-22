@@ -1,0 +1,6 @@
+framework module multiplatform {
+    umbrella header "multiplatform.h"
+
+    export *
+    module * { export * }
+}
